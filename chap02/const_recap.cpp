@@ -5,7 +5,7 @@ int runtime_init() { return 1; }
 int main()
 {
     // High-level const: The value cannot change.
-    // Low-level const (compount) types: The point-to value or bound value is const.
+    // Low-level const (compound) types: The point-to value or bound value is const and cannot change.
 
     const int a_value = 100; // - or -
     const int b_value = runtime_init(); // - or -
@@ -112,6 +112,20 @@ int main()
     auto c = cr; // ok! cr = ci (high-level) hence dropped. c is int
     auto d = &i; // ok! d is int *
     auto e = &ci; // e is const int pointer; (low-level)
+    // Here, observe and note that the top-level constness of the initializer 'ci' is NOT ignored.
 
+    // For high-level const we must do it explicitly
+    const auto f = &ci; // f is top-level const and also low-level const.
 
+    // In auto references, top-level constness (of initializer) IS NOT IGNORED during type deduction!!!
+    const int ci2 = 42;
+    auto &g = ci2; // g is not int &, but it is const int &! Which makes it a low-level const.
+
+    /*
+    Overall, top-level const is ignored during:
+      - Copy initialization
+      - Assignment
+      - Type deduction when the constness applies ONLY to the source object (ex. const auto var = )
+    
+    */
 }
