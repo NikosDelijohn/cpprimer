@@ -25,5 +25,13 @@ int main()
     If the expression is any other expression that is an lvalue, decltype(expr) it returns a reference to the declared type.
     */
 
+    // VS AUTO
+
+    int arr[] = {1,2,3,4};
+
+    auto auto_arr(arr); // this is int* ! IT DEDUCES the type
+    decltype(arr) decl_arr; // this is int[4] ! IT returns the EXACTLY DECLARED type
+    decltype((arr)) decl_ref_arr = arr; // this is int &[4] ! A Reference to the declared type and thus it must be initialized
+
     return 0;
 }

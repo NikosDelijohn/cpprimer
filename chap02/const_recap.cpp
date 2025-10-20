@@ -92,6 +92,9 @@ int main()
     int *const cptr2 = &typical_int; // const is just high-level;
     //int *const cptr3 = &const_typical_int; // this is not allowed! cause pointer could modify (via *) the value of a const object.
 
+    const int *const cptr3 = &typical_int; // remember, this is also fine. the pointee can be a non-const type.
+    typical_int++;
+
     // Constant pointers to constant objects must always be initialized when declared.
     //const int *const cptr4; // not allowed!
 
