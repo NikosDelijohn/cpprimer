@@ -51,5 +51,21 @@ int main()
     v += 1;
     std::cout << vals[0] << std::endl; // 3
 
+    // INITIALIZATION OF VECTOR FROM AN ARRAY! 
+
+    int arr[] = {10,20,30,40,50};
+    vector<int> vec(std::begin(arr), std::end(arr));
+
+    // This initializes the vector to the same elements the arr has
+    for (auto val: vec)
+        std::cout << val; // expect 1020304050;
+    std::cout << std::endl;
+
+    // or 
+    vector<int> vec2(arr+1, arr+3); // copy the values from 20 up to 40 (without 40); Remember, second pointer points to ONE PAST The end
+    for (auto val: vec2)
+        std::cout << val; // expect 203040;
+    std::cout << std::endl; 
+
     return 0;
 }
