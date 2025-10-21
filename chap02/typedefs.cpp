@@ -43,5 +43,13 @@ int main()
     const i &ref = const_ptr; // ok, reference to const integer pointer
     const_ptr_to_ptr = &const_ptr; // fine. its low-level const so it can be re-assigned.
 
+    // arrays 
+    using int_array = int[4];
+    int_array arr = {1,2,3,4};
+
+    // equivalent to 
+    typedef int int_array2[4];
+    int_array2 arr2 = {1,2,3,4}; 
+
     return 0;
 }
