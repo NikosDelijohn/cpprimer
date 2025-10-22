@@ -1,4 +1,6 @@
 #include <iostream>
+#include <string>
+#include <cctype>
 
 int a(){return 1;}
 int b(){return 1;}
@@ -36,9 +38,9 @@ int main()
         || locical  or: guarantees that the lhs oper is evaluated first and that the rhs operand is 
                         evaluated ONLY if the lhs evaluates to false -> short circuit evaluation
 
-     (? :) conditional  
+     (? :) conditional: (cond) ? expr1 : expr2. Guarantees that only one of the expressions will be evaluated!
     
-     , comma
+               , comma: evaluates from LEFT to RIGHT. 
     
      */
 
@@ -58,8 +60,37 @@ int main()
     // if any of these functiosn DO affect the same object, then the expression has undefined behavior and 
     // it is in error!!
 
+    // another undefined scenario
+    std::string input = "this is my input";
+    for (auto it = input.begin(); it != input.end() && !isspace(*it); ++it)
+        *it = std::toupper(*it);
 
-    std::cout << -21 % 5 << std::endl;
+    std::cout << input << std::endl;
+
+    // fine but !!!!
+    input = "this is my input";
+    auto beg = input.begin();
+    while(beg != input.end() && !isspace(*beg))
+        *beg = std::toupper(*beg++); // UNDEFINED BEHAVIOR! -> a subexpression (*beg++) changes the value of an operand (beg) 
+                                     //                        that is used in another subexpression (*beg =)! NO GUARANTEES FOR EVALUATION ORDER!
+
+    // The above may be evaluated as :
+    //   (a):   *beg = toupper(*beg); // lhs is evaluated first
+    //   (b):   *(beg+1) = toupper(*beg); // rhs is evaluated first
+    // or in some completely other way... -> in my machine this printed tTTTTTTTTTTTTTTT
+
+    std::cout << input << std::endl;
+
+    // conditional oper
+
+    int grade = 50;
+    /* conditional oper has lower precedence than shift oper. hence the below expression*/
+    std::cout << (grade < 60) ? "fail" : "pass"; 
+    /* is equivalent to: */
+    std::cout << (grade <60);
+    std::cout ? "fail" : "pass";
+    // the correct way is:
+    std::cout << ((grade < 60) ? "fail" : "pass") << std::endl;
 
     return 0;
 }
