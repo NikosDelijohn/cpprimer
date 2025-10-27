@@ -1,0 +1,13 @@
+#/usr/bin/env bash
+
+#
+# Ex: ./compile -c file1.cpp file2.cpp : Compile, Assemble but do not link
+#     ./compile file1.o file2.o : Link object files to produce a binary 
+#     -or-
+#     ./compile file1.cpp file2.cpp: Compile, Assemble and Link.
+#
+
+COMPILER=g++
+FLAGS=${1}
+
+${COMPILER} ${FLAGS} ${@:2}
