@@ -20,6 +20,7 @@ int main()
 
     // C-Strings and library Strings
     
+    // LITERAL STRINGS ARE CONST CHAR* !!
     const char cstr[256] = "Hello!"; // automatically adds '\0' NULL terminator to hello!
     const char cstr2[256] = {'A','B','C'}; // does NOT add '\0' NULL terminator to ABC!!
     //const char cstr3[5] = "Hello" // error! not enough space to add '\0' NULL terminator!!
