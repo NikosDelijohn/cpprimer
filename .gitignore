@@ -1,3 +1,8 @@
+# ignore compiler default binaries
 a.out
+# ignore cache related files
 *.gch
+# ignore hidden 
 .*
+# ignore assembly
+*.S
