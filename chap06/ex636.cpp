@@ -38,7 +38,7 @@ int main()
     // ------
     
     string strings2[10] = {"h", "e", "l", "l", "o", " ", "!"};
-    string  (&r2)[10] = does_nothing(strings2);
+    string  (&r2)[10] = equiv1(strings2);
     for (auto &elem: r2)
         std::cout << elem << ' ';
     std::cout << std::endl;
@@ -46,7 +46,7 @@ int main()
     // ------
     
     string strings3[10] = {"h", "e", "l", "l", "o", " ", "!"};
-    string  (&r3)[10] = does_nothing(strings3);
+    string  (&r3)[10] = equiv2(strings3);
     for (auto &elem: r3)
         std::cout << elem << ' ';
     std::cout << std::endl;
@@ -54,7 +54,7 @@ int main()
     // ------
     
     string strings4[10] = {"h", "e", "l", "l", "o", " ", "!"};
-    string  (&r4)[10] = does_nothing(strings4);
+    string  (&r4)[10] = equiv3(strings4);
     for (auto &elem: r4)
         std::cout << elem << ' ';
     std::cout << std::endl;
