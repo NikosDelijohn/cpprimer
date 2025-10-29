@@ -90,7 +90,7 @@ int main()
     // These pointers on the other hand, are constant:
     const int *const cptr = &const_typical_int; // left const is low level, right const is high-level
     int *const cptr2 = &typical_int; // const is just high-level;
-    //int *const cptr3 = &const_typical_int; // this is not allowed! cause pointer could modify (via *) the value of a const object.
+    //int *const cptr3 = &const_typical_int; // this is not allowed! cause pointer could modify (via *) the value of a const object. top level constness says nothing about the constness of the underlying object.
 
     const int *const cptr3 = &typical_int; // remember, this is also fine. the pointee can be a non-const type.
     typical_int++;

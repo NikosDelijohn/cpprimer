@@ -1,4 +1,13 @@
 #include <iostream>
+#include <string>
+using std::string;
+
+bool lengthCompare(const string&, const string &);
+bool wrapper(const string& s1, const string& s2,
+             bool (const string&, const string&));
+// or equivalently (since functions decay to ptrs to functions)
+bool wrapper(const string& s1, const string& s2, 
+             bool (*)(const string&, const string&));
 
 int main()
 {
@@ -110,5 +119,59 @@ compound_types_pointers.cpp:69:55: error: ‘void*’ is not a pointer-to-object
     //cptr2 = &val2; // wrong, a constant pointer can't be re-assigned.
     //*cptr2 = -10; // wrong, the object the pointer points to is const and can't be re-assigned.
 
+
+    // @@@@@@@@@@@@@@@@@@@@@ POINTERS TO FUNCTIONS @@@@@@@@@@@@@@@@@@@@@@
+
+    // A function has a type. The function's type is determined by its return type
+    // and the types of its parameters. The function name is not part of its type.
+
+    // Hence to declare a pointer to our lengthCompare func we do:
+    bool (*pf) (const string&, const string&); // pointer is uninitialized.
+    // if we ommit the () around *pf then we just declare a function that returns a ptr to bool!
+    
+    pf = lengthCompare; // for functions we can ommit the address-of & operator
+    pf = &lengthCompare; // equivalent to above
+
+    bool res_a = pf("Hi", "Mark!"); // similarly, we can ommit the dereference * operator
+    bool res_b = (*pf)("Hi", "Mark!"); // equivalent to above
+
+    std::cout << (res_a == res_b) << std::endl; // expect 1
+
+    // NO CONVERSION BETWEEN POINTERS TO ONE FUNCTION TYPE AND POINTERS TO ANOTHER FUNCTION TYPE
+    // We can assign however nullptr or 0;
+
+    pf = 0; /* or */ pf = nullptr;
+
+    bool res_c = wrapper("Hi","i", &lengthCompare); 
+    bool res_d = wrapper("Hi", "b", lengthCompare); // equivalent to above
+
+    std::cout << (res_c == res_d) << std::endl; // expect 1
+
+    // More conveniently, using type aliases and decltype
+
+    // Func and Func2 are function types
+    typedef bool Func(const string&, const string&);
+    typedef decltype(lengthCompare) Func2; // equivalent to above
+
+    // FuncP and FuncP2 are pointer to function types
+    typedef bool (*FuncP)(const string&, const string&);
+    typedef decltype(lengthCompare) *FuncP2; // equivalent to above
+
+    // More at chap06/complicated.cpp
+
     return 0;
+}
+
+// function type is: bool(const string&, const string&)
+bool lengthCompare(const string& s1, const string &s2)
+{
+    return s1.size() < s2.size();
+}
+
+// 3rd argument is a function here! However functions cannot be copied similar to arrays. they decay to pointers to functions like arrays decay as ptrs to arrays
+// automatically here, evaluator is treated as a pointer to a function!!!!!!!!!
+bool wrapper(const string& s1, const string& s2,
+             bool evaluator(const string&, const string&))
+{
+    return evaluator(s1, s2);
 }
