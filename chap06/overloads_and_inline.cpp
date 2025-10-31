@@ -66,7 +66,8 @@ int main()
     // may choose to ignore this request! 
     //
     // Inline is ment to optimize small, straight-line functions that are called
-    // frequently!
+    // frequently! 
+    // !! INLINE FUNCTIONS MUST BE DEFINED IN THE SAME FILE THAT THEY ARE DECLARED. AND THAT APPROPRIATE FILE IS THE HEADER FILE !!
 
     // this will be expanded
     auto &res_3 = the_shorter_string(s1, s2);
