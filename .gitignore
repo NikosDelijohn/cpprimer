@@ -5,4 +5,6 @@ a.out
 # ignore hidden 
 .*
 # ignore assembly
-*.S
+*.[s|S]
+# ignore object files
+*.[o|O]
