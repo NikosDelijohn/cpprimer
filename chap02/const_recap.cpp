@@ -131,4 +131,85 @@ int main()
       - Type deduction when the constness applies ONLY to the source object (ex. const auto var = )
     
     */
+
+    /*
+      __  __                _                 ______                    
+     |  \/  |              | |               |  ____|                   
+     | \  / | ___ _ __ ___ | |__   ___ _ __  | |__ _   _ _ __   ___ ___ 
+     | |\/| |/ _ \ '_ ` _ \| '_ \ / _ \ '__| |  __| | | | '_ \ / __/ __|
+     | |  | |  __/ | | | | | |_) |  __/ |    | |  | |_| | | | | (__\__ \
+     |_|  |_|\___|_| |_| |_|_.__/ \___|_|    |_|   \__,_|_| |_|\___|___/
+                                                                        
+                                                                        
+    */
+
+    /*
+    When it comes to classes and member functions it is possible to append const
+    after the functions parameter list
+    */
+
+    class const_and_noncost
+    {
+    public:
+
+        int value_a = 10u;
+        int value_b = 100u;
+
+        void some_non_const_func() // ClassName* const this;
+        {
+            std::cout << "Non Const Func Called!" << std::endl;
+        }
+
+        void a_const_func() const // const ClassName* const this;
+        {
+            std::cout << "Const Func Called!" << std::endl;
+        }
+        
+        // Overloaded based on const now! Misleading func name however...
+        void some_non_const_func() const // const ClassName* const this;
+        {
+            std::cout << "Overloaded Const Func Called!" << std::endl;
+        }
+
+        // A const function cannot simply return *this.
+        // this is a const ClassName* const pointer
+        // which means that it points to a const object! Hence the return
+        // type must be const (to return a copy) or const & (to return a read-only reference)
+        const const_and_noncost returns_copy_of_this() const
+        {
+          return *this;
+        }
+
+        const const_and_noncost& returns_ref_of_this() const
+        {
+          return *this;
+        }
+               
+    };
+
+    /*
+    By default its member function has access to the pointer `this`.
+    it is a constant pointer which points to the class's instance.
+    In a non-const member function, `this` is of type `ClassName* const` 
+    (the pointer itself is const), so you can modify the object it points to.
+
+    */
+
+    const_and_noncost non_const_object; // default initialized with in-class initializers
+    const const_and_noncost const_object; // similarly
+    
+    // We can freely invoke both functions from the non_const_object.
+    non_const_object.some_non_const_func(); // ok!
+    non_const_object.a_const_func(); // ok!
+    // for both this is initialized to point to non_const_object.                             fine: low-level nonconst <- nonconst is allowed!
+    
+    // But we CANNOT invoke the some_non_const_func() from the const object!
+    const_object.a_const_func(); // ok! `this` is const object *const ptr.                    fine: low-level const <- const is allowed!
+    //const_object.some_non_const_func(); // wrong!
+    // There are no guarantees that the some_non_const_func() wont modify the const object! not ok: low-level nonconst <- const is NOT allowed! 
+
+    // However, we can overload the non_const function to be const! And now we can freely
+    const_object.some_non_const_func(); // compiler detects and resolves the overloaded function based on constness
+    
+    std::cout << const_object.returns_ref_of_this().value_a << std::endl; // expect 10
 }
