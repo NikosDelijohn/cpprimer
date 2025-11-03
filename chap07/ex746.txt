@@ -1,0 +1,26 @@
+(a) A class must provide at least one constructor.
+
+Not true, a class must provide at least one constructor in the case that has objects of class type that cannot be default initialized. 
+Otherwise the synthesized default constructor of the compiler will do the trick for us
+
+===========
+
+(b) A default constructor is a constructor with an empty parameter list.
+
+Not necessarily. It may be that a constructor has only default parameters. Would still work if invoked with no arguments or in cases 
+where you have statements like T obj; where T is the type and obj the variable name.
+
+===========
+
+(c) If there are no meaningful default values for a class, the class should not provide a default constructor.
+
+True. To prohibit unwanted scenarios of invalid values it is best to not have a default constructor. The object should be initialized
+ and used as the class architect intended to do so.
+
+===========
+
+(d) If a class does not define a default constructor, the compiler generates one that initializes each data member to the default value of its associated type
+
+Not true. the compiler-synthesized default constructor performs default initialization of members: class-type members are default-constructed only if their classes
+have accessible default constructors; otherwise, synthesis fails. Built-in types are default-initialized to indeterminate (garbage) values if they have no in-class
+initializer.

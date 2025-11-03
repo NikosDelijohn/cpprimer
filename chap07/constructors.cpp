@@ -43,6 +43,23 @@ struct Sales_data_with_constructors
     */
 };
 
+struct no_default_constructor
+{
+    int some_integer;
+    std::string some_string;
+
+    no_default_constructor(int val):
+        some_integer(val)
+    {}
+
+    // no_default_constructor() = default;
+};
+
+struct class_that_uses_obj_of_no_default_constructor
+{
+    no_default_constructor B;
+};
+
 int main()
 {
     Sales_data obj;
@@ -77,6 +94,14 @@ int main()
     // Value initialization. The default constructor is called, and in-class initializers 
     // are applied for each member. Built-ins without in-class initializers would be zeroed.
     std::cout << cobj2.book_no << ' ' << cobj2.units_sold << ' ' << cobj2.revenue << std::endl;
+
+
+    class_that_uses_obj_of_no_default_constructor error_here;
+    // Here, we use a class that has a member which is of class type that has NO default constructor.
+    // The compiler is not able to synthesize a default constructor for the object 'error_here' because
+    // the member of class type does not provide a default constructor of its own!
+    
+    // Problem is resolved if we uncomment line 55.
 
 
     return 0;
