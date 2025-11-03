@@ -35,7 +35,7 @@ char Screen::get() const
 inline
 char Screen::get(position row, position column) const
 {
-    return contents[row + column];
+    return contents[row*width + column];
 }
 
 inline

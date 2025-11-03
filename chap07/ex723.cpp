@@ -24,6 +24,8 @@ Screen& Screen::move(position row, position column)
 
 Screen& Screen::display(std::ostream &out)
 {
-    out << contents;
+    for (position i = 0; i < height; ++i) {
+        out << contents.substr(i * width, width) << '\n';
+    }    
     return *this;
 }
