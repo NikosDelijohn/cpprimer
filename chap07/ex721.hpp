@@ -5,21 +5,11 @@
 #include <string>
 #include <cassert>
 
-// ----------- FRIENDS -------------
-
-class Sales_data; //forward declaration of class;
-
-Sales_data add(const Sales_data &, const Sales_data &);
-std::istream &read(std::istream &, Sales_data &);
-std::ostream &print(std::ostream &, const Sales_data &);
-
-
 class Sales_data
 {
 
     friend std::istream &read(std::istream &, Sales_data &);
     friend std::ostream &print(std::ostream &, const Sales_data &);
-    friend Sales_data add(const Sales_data &, const Sales_data &);
 
 #ifdef _LEGACY_
     friend const std::string &LEGACY_isbn(Sales_data &);
@@ -52,6 +42,9 @@ private:
     unsigned items_sold = 0;
 };
 
+Sales_data add(const Sales_data &, const Sales_data &);
+std::istream &read(std::istream &, Sales_data &);
+std::ostream &print(std::ostream &, const Sales_data &);
 
 /*
 for inline specifics see ex722.hpp
