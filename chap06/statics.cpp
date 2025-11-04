@@ -46,7 +46,6 @@ private:
     static const int unless_its_const = 42; // however, we CAN provide in class initializers if const.
     static const int another_const; // here we don't provide an in-class initializer (initialized outside class's body)
     static constexpr int or_constexpr = 52; // and we MUST provide in class initializers if constexpr.
-    static std::vector<double> vectr(20);
 };
 
 // defining static member functions
