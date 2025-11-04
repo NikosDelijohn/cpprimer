@@ -1,10 +1,25 @@
+# Ignore all
+*
+
+# Unignore all with extensions
+!*.*
+
+# Unignore all dirs
+!*/
+
 # ignore compiler default binaries
 a.out
-# ignore cache related files
+
+# ignore cache/precompiled files
 *.gch
-# ignore hidden 
+
+# ignore hidden files except .git and .gitignore
 .*
-# ignore assembly
-*.[s|S]
+!.git
+!.gitignore
+
+# ignore assembly files
+*.[sS]
+
 # ignore object files
-*.[o|O]
+*.[oO]
