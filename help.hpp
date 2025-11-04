@@ -29,4 +29,15 @@ void print_bits(const T& value)
     std::cout << bs << " (" << value << ")" << std::endl;
 }
 
+void print_stream_bit_matrix(const std::ios &s)
+{
+    std::cout << "eof bit | fail bit | good bit | bad bit" << std::endl;
+    std::cout << s.eof()
+              <<  "       | " << s.fail() 
+              <<             "        | " << s.good()
+              <<                       "        | " << s.bad() << std::endl;
+    std::cout << "--------+-----------+---------+--------" << std::endl;
+    std::cout << "rdstate(): " << s.rdstate() << "\n\n";
+}
+
 #endif
