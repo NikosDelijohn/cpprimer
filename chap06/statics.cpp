@@ -35,7 +35,7 @@ public:
     static double rate() {return interest_rate;}
     static void rate(double);
 
-    static constexpr int it_will_fail_if_not_defined_outside = 100; // look at line 52. We will use this as an argument to that func
+    static constexpr int it_will_fail_if_not_defined_outside = 100; // look at line 60. We will use this as an argument to that func
 private:
     std::string owner;
     double amount;
