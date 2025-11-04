@@ -22,7 +22,7 @@ public:
     }
     explicit Book(const char* title): book_title(title) {
         #ifndef NDEBUG
-        std::cout << __func__ << " Implicit Constructor call!" << std::endl;
+        std::cout << __func__ << " Actual Explicit Constructor call! 2" << std::endl;
         #endif
     }
 
