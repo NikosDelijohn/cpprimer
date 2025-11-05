@@ -7,6 +7,7 @@
 #include <memory>
 #include <bitset>
 #include <type_traits>
+#include <chrono>
 
 template <typename T>
 std::string type_name(const T& obj)
@@ -38,6 +39,17 @@ void print_stream_bit_matrix(const std::ios &s)
               <<                       "        | " << s.bad() << std::endl;
     std::cout << "--------+-----------+---------+--------" << std::endl;
     std::cout << "rdstate(): " << s.rdstate() << "\n\n";
+}
+
+using Clock = std::chrono::high_resolution_clock;
+
+Clock::time_point tic() { return Clock::now(); }
+
+double tac(const Clock::time_point & start)
+{
+    auto end = Clock::now();
+    std::chrono::duration<double, std::milli> diff = end - start;
+    return diff.count();
 }
 
 #endif
