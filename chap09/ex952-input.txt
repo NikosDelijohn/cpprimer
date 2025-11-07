@@ -1,0 +1,23 @@
+this 
+will 
+be 
+printed last 
+(
+    this text 
+    will be replaced
+    at the standard output
+)
+but
+that
+is
+ok 
+no problem
+(
+    another
+    replacement
+    here
+)
+)
+the paren will stay however cause 
+open paren is unseen
+hello :D
