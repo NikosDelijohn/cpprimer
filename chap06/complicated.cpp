@@ -135,9 +135,13 @@ int (*factory(size_t key))(int *, size_t)
 // with type aliasing
 using FF = int (int*, size_t);
 FF *equivalent_factory(size_t key)
-{                   // & is equivalent here& with previous and next functions' statements
+{                   // specifying & explicitly here. Although it can be omitted
+                    // when referring to functions being returned.
     return (key == 1)? &min : (key == 2) ? &max : nullptr;
 }
+
+// & can be omitted when returning a function pointer due to 
+// function-to-pointer decay, similar to array-to-pointer decay
 
 // with trailing return type
 auto another_equiv_factory(size_t key) -> int (*)(int*, size_t)
