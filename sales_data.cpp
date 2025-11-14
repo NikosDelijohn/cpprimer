@@ -59,3 +59,27 @@ std::ostream &print(std::ostream &out, const Sales_data &to)
         << to.avg_price() << std::endl;
     return out;
 }
+
+std::istream &operator>>(std::istream &is, Sales_data &obj)
+{
+    read(is, obj); // delegate the actual read to the friend read
+    return is;
+}
+
+Sales_data operator+(const Sales_data &lhs, const Sales_data &rhs)
+{
+    Sales_data retval = lhs;
+    retval.combine(rhs);
+    return retval;
+}
+
+bool operator==(const Sales_data &lhs, const Sales_data &rhs)
+{
+    return lhs.isbn() == rhs.isbn();
+}
+
+std::ostream& operator<<(std::ostream &os, const Sales_data &obj)
+{
+    print(os, obj);
+    return os;
+}

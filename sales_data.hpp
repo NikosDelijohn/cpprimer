@@ -11,7 +11,10 @@ class Sales_data; //forward declaration of class;
 Sales_data add(const Sales_data &, const Sales_data &);
 std::istream &read(std::istream &, Sales_data &);
 std::ostream &print(std::ostream &, const Sales_data &);
-
+std::istream &operator>>(std::istream &, Sales_data &);
+std::ostream &operator<<(std::ostream &, const Sales_data &);
+Sales_data operator+(const Sales_data &, const Sales_data &);
+bool operator==(const Sales_data &, const Sales_data &);
 
 class Sales_data
 {
