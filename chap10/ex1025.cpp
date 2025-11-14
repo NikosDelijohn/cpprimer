@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <functional>
 #include <algorithm>
 
 void remove_duplicates(std::vector<std::string> &s_vec)
