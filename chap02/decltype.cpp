@@ -12,6 +12,8 @@ int main()
 
     decltype(cj) y = x; // y is const int &. -but-
     auto y2 = cj; // y2 is int ! top level const is ignored here
+    auto &y3 = cj; // but preserved here. y3 is const int &.
+    //y3 = 5; // wrong! cannot modify a const. 
 
     int value = 1;
     int &ref_val = value;
