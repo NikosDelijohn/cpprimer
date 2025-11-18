@@ -184,7 +184,17 @@ int main()
         {
           return *this;
         }
-               
+        
+        int& ref_to_value_a()               // NON-CONST overload
+        {
+            return value_a;                 // mutable reference
+        }
+
+        const int& ref_to_value_a() const   // CONST overload
+        {
+            return value_a;   // MUST be const reference!
+                              // Otherwise a const object could be modified
+        }
     };
 
     /*
@@ -212,4 +222,12 @@ int main()
     const_object.some_non_const_func(); // compiler detects and resolves the overloaded function based on constness
     
     std::cout << const_object.returns_ref_of_this().value_a << std::endl; // expect 10
+
+    // Why ref_to_value_a() MUST !!! return const in const overloaded version
+
+    int& x1 = non_const_object.ref_to_value_a();      // OK
+    const int& x2 = const_object.ref_to_value_a();    // OK (read-only)
+    // If the const overload returned `int&`, this would compile:
+    // const_object.ref_to_value_a() = 999;  <-- BAD!
+    // This would modify a const object, breaking const correctness.
 }
