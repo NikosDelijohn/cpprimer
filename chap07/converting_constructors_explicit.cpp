@@ -6,6 +6,8 @@ IMPLICIT conversion from the constructor's parameter type to the class
 type. However, we can prohibit the usage of such constructors for IMPLICIT
 conversions by using the 'explicit' keyword as below.
 
+explicit forbids implicit conversions and copy-initialization forms (including T x = y; and T x = { ... };).
+explicit does not forbid direct forms (T x(y); or T x{y};).
 */
 
 class Book
@@ -42,6 +44,13 @@ int main()
 {   
     std::string title = "Alice in Wonderland";
     Book book_a(title); 
+    
+    // Also , we cannot do this
+    // Book book_b = "Ithaca"; // no suitable constructor exists to convert from const char [7] to Book
+    // Book book_c = {"Ithaca"}; // Copy-list iniitialization cannot use a constructor marked 'explicit'
+    
+    // This is still ok!
+    Book book_d {"Ithaca"};
     
     // In order to use combine now we have to explicitly
     // create an Object Book!

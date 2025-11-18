@@ -40,6 +40,11 @@ int main()
 {   
     std::string title = "Alice in Wonderland";
     Book book_a(title);
+
+    // Also , we can do this
+    Book book_b = "Ithaca";
+    Book book_c = {"Ithaca"};
+    Book book_d {"Ithaca"};
     
     // The compiler generates a temporary object from the const char* we provided
     // and accepts the call to the function.
