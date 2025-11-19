@@ -82,7 +82,7 @@ int main()
 {
     String_Blob B1 = {"This", "is", "a", "blob!"};
     {
-        String_Blob B2 = B1;
+        String_Blob B2 = B1; // default copy constructor used.
         const String_Blob B3 = B2; // B3 itself cannot modify its members. however, due to shared_ptr, others can! Shared ownership doesn't guarantee constness
 
         std::cout << B3.back() << std::endl;
