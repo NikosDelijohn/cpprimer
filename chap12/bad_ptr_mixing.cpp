@@ -17,12 +17,16 @@ int main()
     process(sp);
     // Fine. Pass by value. SP is copied, use_count incremented and decremented afterwards.
 
+    // ------------------------------------
+
     // shared_ptr ctor is explicit. Cannot use raw ptr to create a shared_ptr like this 
     //process(new int());
     //process(p);
 
+    // ------------------------------------
+
     //However, here's something dangerous:
-    // process(std::shared_ptr<int>(p)); // This compiles!
+    process(std::shared_ptr<int>(p)); // This compiles!
 
     /*
     This will compile. However, here's the problem.
@@ -33,8 +37,10 @@ int main()
     Pointer p is now dangling! Thus dereferencing pointer or using it past this point is UB 
     */
 
+    // ------------------------------------
+
     // Equivalently dangerous:
-    // process(std::shared_ptr<int>(sp.get())); // This compiles!
+    process(std::shared_ptr<int>(sp.get())); // This compiles!
     
     /*
     This will also compile. But here is what really happens:
@@ -59,11 +65,27 @@ int main()
     That's why this call is extremely dangerous.
     */
 
+    // ------------------------------------
+
     // Similar to what happens here:
     auto sp2 = std::make_shared<int>();
     auto p2 = sp2.get();
     delete p2; // this will leave sp2 dangling! So when sp2 is deleted we will have double free() error! DANGEROUS!
     
 
-    return 0;
+    // ------------------------------------
+
+    // Another bad example:
+    int *ip = new int(42);
+    {
+
+        // the same if we had a new shared_ptr here
+        std::unique_ptr<int> usp(ip); // unique ptr assumes ownership however raw ptr still has access to the same resource
+        *ip = 423; // ip and usp point to the same integer. This affects both pointers and its a mistake.
+        // ip should no more be used at all after the initialization of a smart pointer!!
+        
+    }// but here, unique_ptr gets deleted WHICH leaves ip dangling
+    
+    delete ip; // double free() here. ERROR
 }
+
