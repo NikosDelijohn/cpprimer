@@ -78,6 +78,12 @@ void String_Blob::pop_back()
     data->pop_back();
 }
 
+void String_Blob::push_back(const std::string & str)
+{
+    data->push_back(str);
+}
+
+
 int main()
 {
     String_Blob B1 = {"This", "is", "a", "blob!"};
