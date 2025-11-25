@@ -1,9 +1,10 @@
 #include <sstream>
 #include "text_query.hpp"
 #include "query_result.hpp"
+#include "string_blob.hpp"
 
 Text_Query::Text_Query(std::ifstream& file):
-file_contents(std::make_shared<std::vector<std::string>>())
+file_contents(std::make_shared<String_Blob>())
 {
     std::string line;
     std::string word;

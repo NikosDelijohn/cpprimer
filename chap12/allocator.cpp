@@ -42,7 +42,8 @@ int main()
 
     // --- allocator Algorithms ---
 
-    std::string *const ptr2 = alloc.allocate(4);
+    constexpr int num_elements2 = 4;
+    std::string *const ptr2 = alloc.allocate(num_elements2);
     std::vector<std::string> vec = {"A", "B", "C", "D"};
 
     // Copy 
@@ -63,6 +64,8 @@ int main()
 
     while(beg != ptr2)
         alloc.destroy(--beg);
+
+    alloc.deallocate(ptr2, num_elements2);
 
     return EXIT_SUCCESS;
 }
