@@ -16,6 +16,12 @@ public:
     will be destroyed and the freshly coppied object's ps pointer would
     remain dangling. The only way is to use new
     */
+
+    HasPtr::~HasPtr()
+    {
+        delete ps;
+    };
+
     HasPtr& operator=(const HasPtr& rhs)
     {
         if (this != &rhs) // the objects are different
