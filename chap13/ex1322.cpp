@@ -35,14 +35,18 @@ public:
         return *this;
     }
 
-private:
     std::string *ps;
     int i;
-
 };
 
 
 int main()
 {
+    HasPtr A("Hi!");
+    HasPtr B(A);
+
+    *A.ps = "Yes!"; // doesn't modify B
+    std::cout << *A.ps << " - vs - " << *B.ps << std::endl;
+
     return EXIT_SUCCESS;
 }

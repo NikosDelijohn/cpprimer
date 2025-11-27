@@ -1,12 +1,17 @@
 #include <iostream>
 #include <string>
+#include <vector>
+#include <algorithm>
 
 class HasPtr
 {
+    friend void swap(HasPtr &, HasPtr &);
+
 public:
     HasPtr(const std::string &s = std::string()):
         ps(new std::string(s)), i(0)
         {};
+    HasPtr(const char *cs) : ps(new std::string(cs)), i(0) {}
     HasPtr(const HasPtr &other):
         ps(new std::string(*other.ps)), i(other.i){};
 
@@ -35,14 +40,38 @@ public:
         return *this;
     }
 
-private:
+    bool operator<(const HasPtr &rhs)
+    {
+        return *ps < *rhs.ps;
+    }
+
     std::string *ps;
     int i;
-
 };
 
+void swap(HasPtr &a, HasPtr &b)
+{  
+    std::cout << "Swapping !\n";
+    using std::swap;
+    swap(a.ps, b.ps);
+    swap(a.i, b.i);
+}
 
 int main()
 {
+    HasPtr A("Hi!");
+    HasPtr B(A);
+
+    *A.ps = "Yes!"; // doesn't modify B
+    std::cout << *A.ps << " - vs - " << *B.ps << std::endl;
+    swap(A,B);
+    std::cout << *A.ps << " - vs - " << *B.ps << std::endl;
+
+    std::vector<HasPtr> vec{ "Hello", "World", "P", "Q", "R", "S", "T", "U",
+      "ABC", "DEF", "AB", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L",
+      "ABC", "DEF", "AB", "C", "D", "E", "J", "K", "L", "M", "N" };
+      
+    std::sort(vec.begin(), vec.end());    
+
     return EXIT_SUCCESS;
 }

@@ -3,6 +3,8 @@
 
 class HasPtr
 {
+    friend void swap(HasPtr &, HasPtr &);
+
 public:
     HasPtr(const std::string &s = std::string()):
         ps(new std::string(s)), i(0)
@@ -35,14 +37,28 @@ public:
         return *this;
     }
 
-private:
     std::string *ps;
     int i;
-
 };
 
+void swap(HasPtr &a, HasPtr &b)
+{  
+    std::cout << "Swapping !\n";
+    using std::swap;
+    swap(a.ps, b.ps);
+    swap(a.i, b.i);
+}
 
 int main()
 {
+    HasPtr A("Hi!");
+    HasPtr B(A);
+
+    *A.ps = "Yes!"; // doesn't modify B
+    std::cout << *A.ps << " - vs - " << *B.ps << std::endl;
+    swap(A,B);
+    std::cout << *A.ps << " - vs - " << *B.ps << std::endl;
+
+
     return EXIT_SUCCESS;
 }
