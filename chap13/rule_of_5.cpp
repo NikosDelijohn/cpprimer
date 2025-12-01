@@ -15,6 +15,23 @@
 
 */
 
+/*
+
+MOVE Semantics:
+
+    For built-in types such as int, double, or raw pointers, “moving” an object has no real  semantic effect: 
+    these types are trivially copyable, so applying std::move or using an rvalue reference simply  results in
+    a bitwise copy of the object. There is no resource ownership to transfer, no  heap  allocations to steal, 
+    and no optimization beyond what a normal copy would do. In contrast, for user-defined types like  string,
+    std::vector, std::unique_ptr, or custom classes that manage dynamic resources, move  semantics allow  the 
+    efficient transfer of ownership of internal resources. A move constructor or move assignment can  “steal” 
+    memory or other expensive-to-copy data from the source object,  leaving  it  in  a  valid but unspecified
+    state, while avoiding unnecessary deep copies or allocations. Thus, for built-in types, moves are trivial
+    and  equivalent  to  copies,  whereas for types managing resources, moves provide significant performance 
+    benefits.
+
+*/
+
 class Resource
 {
 public:

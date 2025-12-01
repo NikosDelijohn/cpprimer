@@ -15,6 +15,19 @@ strvec::strvec(const strvec &other)
     first_free = cap = new_data.second;
 }
 
+strvec::strvec(strvec &&other):
+    elements(std::move(other.elements)),
+    first_free(std::move(other.first_free)),
+    cap(std::move(other.cap))
+{
+#ifndef NDEBUG
+    std::cout << __func__ << " Move Constructor Invoked" << std::endl;
+#endif
+
+    other.elements = other.first_free = other.cap = nullptr;
+
+}
+
 strvec& strvec::operator=(const strvec &rhs)
 {
     if (this != &rhs)
@@ -24,6 +37,23 @@ strvec& strvec::operator=(const strvec &rhs)
         
         elements = new_data.first;
         first_free = cap = new_data.second;
+    }
+
+    return *this;
+}
+
+strvec& strvec::operator=(strvec &&rhs)
+{
+    if (this != &rhs)
+    {
+        free();
+
+        elements = rhs.elements;
+        first_free = rhs.first_free;
+        cap = rhs.cap;
+
+        rhs.elements = rhs.first_free = rhs.cap = nullptr;
+
     }
 
     return *this;

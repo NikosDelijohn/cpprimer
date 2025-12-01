@@ -51,6 +51,10 @@ void string::free()
 
 string::string(const char* cstr)
 {
+#ifndef NDEBUG
+    std::cout << __func__ << " C_str Constructor Invoked" << std::endl;
+#endif
+
     size_t len = std::strlen(cstr);
     auto new_data = copy_and_allocate(cstr, cstr + len);
 
@@ -61,6 +65,9 @@ string::string(const char* cstr)
 
 string::string(const string &other)
 {
+#ifndef NDEBUG
+    std::cout << __func__ << " Copy-Constructor Invoked" << std::endl;
+#endif
     auto new_data = copy_and_allocate(other.begin(), other.end());
 
     characters = new_data.first;
@@ -70,6 +77,10 @@ string::string(const string &other)
 
 string& string::operator=(const string &rhs)
 {
+#ifndef NDEBUG
+    std::cout << __func__ << " Copy-Assignment operator (=) Invoked" << std::endl;
+#endif
+
     if (this != &rhs)
     {
         auto new_data = copy_and_allocate(rhs.begin(), rhs.end());
@@ -80,6 +91,38 @@ string& string::operator=(const string &rhs)
     }
 
     return *this;
+}
+
+string& string::operator=(string &&rhs) noexcept
+{
+#ifndef NDEBUG
+    std::cout << __func__ << " Move-Assignment operator (=) Invoked" << std::endl;
+#endif   
+
+    if (this != &rhs)
+    {
+        free();
+
+        characters = rhs.characters;
+        first_free = rhs.first_free;
+        cap = rhs.cap;
+
+        rhs.characters = rhs.first_free = rhs.cap = nullptr;
+    }
+
+    return *this;
+}
+
+string::string(string &&other) noexcept :
+    characters(other.characters),
+    first_free(other.first_free),
+    cap(other.cap)
+{
+#ifndef NDEBUG
+    std::cout << __func__ << " Move Constructor Invoked" << std::endl;
+#endif
+
+    other.characters = other.first_free = other.cap = nullptr;
 }
 
 string::~string()
@@ -134,6 +177,9 @@ void string::resize(size_t n, const char &ch)
     }
 }
 
+// compile with -D STRING_TEST_MAIN for standalone usage.
+#ifdef STRING_TEST_MAIN
+
 void print_str(const string &str)
 {
     for (size_t idx = 0u; idx < str.size(); ++idx)
@@ -170,3 +216,4 @@ int main()
 
     return 0;
 }
+#endif

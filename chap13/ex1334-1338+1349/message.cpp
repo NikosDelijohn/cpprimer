@@ -18,6 +18,23 @@ Message::Message(const Message &other):
     add_to_folders(other);
 }
 
+Message::Message(Message &&other):
+    contents(std::move(other.contents)),
+    folders(std::move(other.folders))
+{
+#ifndef NDEBUG
+        std::cout << "[" << __func__ << "]" << " Move-Constructor invoked!\n";
+#endif
+    for (auto &folder: folders)
+    {
+        folder->remove_from_folder(&other);
+        folder->add_to_folder(this);
+    }
+
+    other.contents.clear();
+    other.folders.clear();
+}
+
 Message::~Message()
 {
     /*
@@ -50,6 +67,30 @@ Message& Message::operator=(const Message &rhs)
         add_to_folders(rhs);
     }
 
+    return *this;
+}
+
+Message& Message::operator=(Message &&rhs)
+{
+#ifndef NDEBUG
+        std::cout << "[" << __func__ << "]"  " Move-Assignment invoked!\n";
+#endif
+    if (this != &rhs)
+    {
+        remove_from_folders();
+        contents = std::move(rhs.contents);
+        folders = std::move(rhs.folders);
+
+        for (auto &folder: folders) // rhs folders now mine
+        {
+            folder->add_to_folder(this);
+            folder->remove_from_folder(&rhs);
+        }
+
+        rhs.contents.clear();
+        rhs.folders.clear();
+    }
+    
     return *this;
 }
 

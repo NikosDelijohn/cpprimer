@@ -13,9 +13,11 @@ public:
 
     string(const char *);
     string(const string &);
+    string(string &&) noexcept;
     ~string();
     
     string& operator=(const string &);
+    string& operator=(string &&) noexcept;
 
     size_t size() const {return first_free - characters;}
     size_t capacity() const { return cap - characters;}

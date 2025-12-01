@@ -16,6 +16,8 @@ public:
 
     Message(const Message &);
     Message& operator=(const Message &);
+    Message(Message &&); // ex1349
+    Message& operator=(Message &&); // ex1349
     ~Message();
 
     void save(Folder &);

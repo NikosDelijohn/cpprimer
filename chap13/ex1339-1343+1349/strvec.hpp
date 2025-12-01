@@ -24,8 +24,11 @@ public:
     }
 
     strvec(const strvec &);
+    strvec(strvec &&) noexcept;
     ~strvec();
     strvec& operator=(const strvec &);
+    strvec& operator=(strvec &&) noexcept;
+
     void push_back(const std::string&);
 
     size_t size() const {return first_free - elements;}
