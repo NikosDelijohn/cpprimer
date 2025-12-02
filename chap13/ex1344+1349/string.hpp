@@ -29,7 +29,7 @@ public:
     void reserve(size_t);
 
 
-    size_t length() {return first_free - characters - 1;}
+    size_t length() {return size();}
     char& back(){return *(first_free - 1);}
     char& front(){return *characters;}
     void clear(){ first_free = characters;}
