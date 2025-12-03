@@ -22,6 +22,9 @@ public:
     string& operator=(const string &);
     string& operator=(string &&) noexcept;
 
+    char& operator[](size_t);
+    const char& operator[](size_t) const;
+
     size_t size() const {return first_free - characters;}
     size_t capacity() const { return cap - characters;}
     

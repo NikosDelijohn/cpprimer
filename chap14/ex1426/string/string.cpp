@@ -218,6 +218,21 @@ bool operator>=(const string& a, const string& b)
     return !(a < b);
 }
 
+char& string::operator[](size_t idx)
+{
+    if (idx >= size())
+        throw std::out_of_range("Index: " + std::to_string(idx) + " is Out of bounds");
+
+    return *(characters + idx);
+}
+
+const char& string::operator[](size_t idx) const
+{
+    if (idx >= size())
+        throw std::out_of_range("Index: " + std::to_string(idx) + " is Out of bounds");
+
+    return *(characters + idx);    
+}
 
 // compile with -D STRING_TEST_MAIN for standalone usage.
 #ifdef STRING_TEST_MAIN
@@ -236,29 +251,16 @@ int main()
     string A("ABC");
     std::cout << A.size() << std::endl;
 
-    print_str(A);
-
     A.resize(1);
-
-    print_str(A);
 
     for(auto i = 0; i < 10; i++)
         A.push_back('B'+i);
 
     print_str(A);
-    
-    std::cout << "Length of string is: " << A.length() << std::endl;
-    std::cout << "   Third element is: " << A.at(3) << std::endl;
-    std::cout << "   Front element is: " << A.front() << std::endl;
-    std::cout << "    Back element is: " << A.back() << std::endl;
+
+    std::cout << std::boolalpha << (A[3] == 'D') << std::endl;
 
     A.clear();
-
-    print_str(A);
-
-
-    string B("AAAA");
-    std::cout << std::boolalpha << (B == "AAWA") << std::endl; // implicit ctor invocation
 
     return 0;
 }

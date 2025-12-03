@@ -21,6 +21,16 @@ public:
     String_Blob_Ptr();
     String_Blob_Ptr(String_Blob&, size_type sz = 0);
 
+    std::string& operator[](size_t idx)
+    {
+        return (*check(idx, "Requested index out of bounds"))[idx];
+    }
+
+    const std::string& operator[](size_t idx) const
+    {
+        return (*check(idx, "Requested index out of bounds"))[idx];
+    }
+
     std::string& dereference() const;
 
     String_Blob_Ptr& increment();
