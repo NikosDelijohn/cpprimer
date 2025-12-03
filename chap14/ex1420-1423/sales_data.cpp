@@ -37,6 +37,12 @@ Sales_data::Sales_data(const std::string &book_no):
         #endif
 }
 
+Sales_data& Sales_data::operator=(const std::string &other_isbn)
+{
+    book_isbn = other_isbn;
+    return *this;
+}
+
 std::istream &operator>>(std::istream &is, Sales_data &obj)
 {
     double price_of_one;
@@ -50,16 +56,60 @@ std::istream &operator>>(std::istream &is, Sales_data &obj)
     return is;
 }
 
+#ifndef EX1421
+Sales_data& Sales_data::operator+=(const Sales_data &other)
+{
+    if (isbn() == other.isbn())
+    {
+        total_revenue += other.total_revenue;
+        items_sold += other.items_sold;
+    }
+
+    return *this;
+}
+
 Sales_data operator+(const Sales_data &lhs, const Sales_data &rhs)
 {
     Sales_data retval = lhs;
-    retval.combine(rhs);
+    retval += rhs;
     return retval;
 }
 
+#else
+
+Sales_data& Sales_data::operator+=(const Sales_data &other)
+{
+    if (isbn() == other.isbn())
+    {
+       *this = *this + other;
+    }
+
+    return *this;
+}
+
+Sales_data operator+(const Sales_data &lhs, const Sales_data &rhs)
+{
+    Sales_data retval = lhs;
+
+    if (lhs.isbn() == rhs.isbn())
+    {
+        retval.total_revenue += rhs.total_revenue;
+        retval.items_sold += rhs.items_sold;
+    }
+    return retval;
+}
+#endif
+
 bool operator==(const Sales_data &lhs, const Sales_data &rhs)
 {
-    return lhs.isbn() == rhs.isbn();
+    return lhs.book_isbn == rhs.book_isbn 
+        && lhs.items_sold == rhs.items_sold
+        && lhs.total_revenue == rhs.total_revenue;
+}
+
+bool operator!=(const Sales_data &lhs, const Sales_data &rhs)
+{
+    return !(lhs == rhs);
 }
 
 std::ostream& operator<<(std::ostream &os, const Sales_data &obj)
