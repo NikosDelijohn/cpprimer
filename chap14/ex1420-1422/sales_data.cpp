@@ -15,7 +15,7 @@ Sales_data::Sales_data(const std::string &book_no, const unsigned items_sold, co
 Sales_data::Sales_data(): Sales_data("", 0u, 0.0)
 {
     #ifndef NDEBUG
-    std::cout << __func__ << ": Constructor 1 body called!" << std::endl;
+    std::cout << __func__ << "() ctor!" << std::endl;
     #endif
 }
 
@@ -23,7 +23,7 @@ Sales_data::Sales_data(std::istream &in):
     Sales_data("", 0u, 0.0)
 {
     #ifndef NDEBUG
-    std::cout << __func__ << ": Constructor 2 body called!" << std::endl;
+    std::cout << __func__ << "(std::istream &) ctor!" << std::endl;
     #endif
 
     operator>>(in, *this);
@@ -32,13 +32,16 @@ Sales_data::Sales_data(std::istream &in):
 Sales_data::Sales_data(const std::string &book_no): 
     Sales_data(book_no, 0u, 0.0)
 {
-        #ifndef NDEBUG
-        std::cout << __func__ << ": Constructor 3 body called!" << std::endl;
-        #endif
+    #ifndef NDEBUG
+    std::cout << __func__ << "(const std::string &) ctor!" << std::endl;
+    #endif
 }
 
-Sales_data& Sales_data::operator=(const std::string &other_isbn)
+Sales_data& Sales_data::operator=(std::string &other_isbn)
 {
+    #ifndef NDEBUG
+    std::cout << __func__ << " !\n";
+    #endif
     book_isbn = other_isbn;
     return *this;
 }

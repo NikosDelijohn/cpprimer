@@ -31,12 +31,12 @@ class Sales_data
 public:
 
     Sales_data();    
-    Sales_data(std::istream &);
+    explicit Sales_data(std::istream &);
     Sales_data(const std::string &, const unsigned, const double);
-    Sales_data(const std::string &);
+    explicit Sales_data(const std::string &);
     
     Sales_data& operator+=(const Sales_data&);
-    Sales_data& operator=(const std::string&);
+    Sales_data& operator=(std::string&);
     
     inline std::string isbn() const { return book_isbn; }
 
