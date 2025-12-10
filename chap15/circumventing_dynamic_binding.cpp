@@ -9,11 +9,6 @@ class Derived : public Base {
 public:
     void foo() override { std::cout << "Derived::foo\n"; }
 
-    void test()
-    {
-        foo();          // dynamic binding → calls Derived::foo
-        Base::foo();    // static binding  → calls Base::foo
-    }
 };
 
 int main()
@@ -31,5 +26,8 @@ int main()
     dd->Derived::foo(); // Ok! 
     dd->Base::foo(); // This is OK Derived is also Base type!
 
-    d.test();        // shows both behaviors
+    // Note that this is all allowed due to the fact that the type of inheritance is public!
+    // Usercode would not be able to do any sort of derived-to-base conversion otherwise!
+
+    return EXIT_SUCCESS;
 }
