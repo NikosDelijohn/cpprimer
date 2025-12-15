@@ -3,6 +3,9 @@
 #include "not_query.hpp"
 #include "and_query.hpp"
 #include "or_query.hpp"
+#include "query_result.hpp"
+#include "xor_query.hpp"
+#include "text_query.hpp"
 
 Query::Query(const std::string &str): q(new Word_Query(str))
 {
@@ -56,4 +59,9 @@ Query operator&(const Query &lhs, const Query &rhs)
 Query operator|(const Query &lhs, const Query &rhs)
 {
     return Query(std::shared_ptr<Base_Query>(new Or_Query(lhs, rhs)));
+}
+
+Query operator^(const Query &lhs, const Query &rhs)
+{
+    return Query(std::shared_ptr<Base_Query>(new Xor_Query(lhs, rhs)));
 }

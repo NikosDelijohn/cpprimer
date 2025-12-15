@@ -11,6 +11,7 @@ class Word_Query;
 class Not_Query;
 class And_Query;
 class Or_Query;
+class Xor_Query;
 
 
 class Query
@@ -18,6 +19,7 @@ class Query
     friend Query operator~(const Query &);
     friend Query operator&(const Query &, const Query &);
     friend Query operator|(const Query &, const Query &);
+    friend Query operator^(const Query &, const Query &);
 
 public:
 
@@ -32,3 +34,5 @@ private:
     Query(std::shared_ptr<Base_Query>);
     std::shared_ptr<Base_Query> q;
 };
+
+std::ostream& operator<<(std::ostream&, const Query &);

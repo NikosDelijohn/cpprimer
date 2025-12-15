@@ -13,6 +13,5 @@ class And_Query: public Binary_Query
 private:
 
     And_Query(const Query &, const Query &);
-    
-    Query_Result eval(const Text_Query&) const;
+    virtual Query_Result eval(const Text_Query&) const override;
 };

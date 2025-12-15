@@ -19,7 +19,7 @@ Query_Result Word_Query::eval(const Text_Query &tq) const
 std::string Word_Query::rep() const
 {
 #ifndef NDEBUG
-    std::cout << "Word_Query::"<<__func__<< std::endl;
+    std::cout << "Word_Query::"<<__func__<< " " << query_word << " " << std::endl;
 #endif 
     return query_word;
 }

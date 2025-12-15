@@ -13,7 +13,8 @@ class Text_Query
 public:
 
     using line_no = std::vector<std::string>::size_type;
-    Text_Query(std::ifstream&);
+    Text_Query() = default;
+    explicit Text_Query(std::ifstream&);
     Query_Result query(const std::string&) const;
 
 private:

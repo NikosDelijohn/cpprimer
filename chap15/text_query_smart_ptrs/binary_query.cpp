@@ -11,7 +11,7 @@ Binary_Query::Binary_Query(const Query &l, const Query &r, const std::string &op
 std::string Binary_Query::rep() const
 {
 #ifndef NDEBUG
-    std::cout << "Binary_Query::" << __func__ << std::endl;
+    std::cout << "Binary_Query::" << __func__ << " " << op << " " << std::endl;
 #endif    
     return "(" + lhs.rep() + " " + op + " " + rhs.rep() + ")";
 }
