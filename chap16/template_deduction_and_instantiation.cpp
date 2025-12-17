@@ -4,16 +4,18 @@
 template <typename T>
 bool compare(const T& a, const T& b) 
 {
-    return a < b;
+   return a < b;
 }
 
 int main() 
 {
-    int x = 5, y = 10;
-    double dx = 3.14, dy = 2.71;
+   int x = 5, y = 10;
+   double dx = 3.14, dy = 2.71;
 
-    std::cout << compare(x, y) << std::endl;  // instantiates compare<int>
-    std::cout << compare(dx, dy) << std::endl; // instantiates compare<double>
+   std::cout << compare(x, y) << std::endl;  // instantiates compare<int>
+   std::cout << compare(dx, dy) << std::endl; // instantiates compare<double>
+   
+   return EXIT_SUCCESS;
 }
 
 /*
