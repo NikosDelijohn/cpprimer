@@ -9,6 +9,11 @@ int main()
 
     for (auto &elem: my_vector)
         std::cout << elem << std::endl;
+
+    my_vector.clear();
     
+    for (auto &elem: my_vector)
+        std::cout << elem << std::endl;
+
     return EXIT_SUCCESS;
 }

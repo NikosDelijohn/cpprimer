@@ -134,5 +134,71 @@ void vec<Element>::push_back(const Element& element)
 {
     check_and_alloc();
     alloc.construct(first_free++, element);
+}
 
+template <typename Element>
+void vec<Element>::push_back(Element&& element)
+{
+    check_and_alloc();
+    alloc.construct(first_free++, element);    
+}
+
+template <typename Element>
+void vec<Element>::pop_back()
+{
+    alloc.destroy(--first_free);
+}
+
+
+template <typename Element>
+void vec<Element>::resize(size_t n)
+{
+    while(n > size())
+        push_back(Element());
+
+    while(n < size())
+        pop_back();
+}
+
+template <typename Element>
+void vec<Element>::resize(size_t n, const value_type &value)
+{
+    while(n > size())
+        push_back(value);
+
+    while(n < size())
+        pop_back();
+}   
+
+template <typename Element>
+void vec<Element>::reserve(size_t n)
+{
+    if (n > capacity())
+    {
+        auto new_begin = alloc.allocate(n);
+        auto new_cap_end = new_begin + n;
+
+        auto src = elements;
+        auto dst = new_begin;
+
+        try
+        {
+            for (size_t idx = 0u; idx < size(); ++idx)
+                alloc.construct(dst++, std::move(*src++));
+        }
+        catch (...)
+        {
+            while(dst != new_begin)
+                alloc.destroy(--dst);
+
+            alloc.deallocate(new_begin, n);
+            throw;
+        }
+
+        free();
+
+        elements = new_begin;
+        first_free = dst;
+        cap = new_cap_end;
+    }
 }
