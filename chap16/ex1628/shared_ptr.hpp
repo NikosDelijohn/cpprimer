@@ -33,8 +33,9 @@ public:
     {
 #ifndef NDEBUG
         std::cout << __func__ << ": Destroying object!\n";
-        deleter(static_cast<void*>(pointee));
 #endif
+        deleter(static_cast<void*>(pointee));
+
     }
 
     ~control_block() = default;        
