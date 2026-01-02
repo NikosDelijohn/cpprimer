@@ -36,6 +36,9 @@ public:
     }
 };
 
+Book make_book() { return "Ha!"; } // uses const char to construct a book
+Book make_book2() { return std::string("Ha2!"); } // again, uses the string converting ctor to do the same.
+
 int main()
 {   
     std::string title = "Alice in Wonderland";
@@ -45,11 +48,16 @@ int main()
     Book book_b = "Ithaca";
     Book book_c = {"Ithaca"};
     Book book_d {"Ithaca"};
+    const Book& book_e = "Ithaca"; 
+    const Book book_f = "Ithaca";
     
     // The compiler generates a temporary object from the const char* we provided
     // and accepts the call to the function.
     book_a.combine("Alice in Wonderland");
     book_a.print(); // expect 1 !
+
+    Book made = make_book();
+    Book made2 = make_book2();
 
     return EXIT_SUCCESS;
 }
