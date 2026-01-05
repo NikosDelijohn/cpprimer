@@ -1,9 +1,9 @@
 #include <iostream>
-#include "shared_ptr.hpp"
+#include "shared_ptr2.hpp"
 
-void my_deleter(void* p)
+void my_deleter(int* p)
 {
-    delete static_cast<int*>(p);
+    delete p;
 }
 
 int main()
@@ -11,6 +11,7 @@ int main()
 
 
     auto mysp = msp::shared_ptr<int>(new int(42));
+    std::cout << mysp.get_uses() << std::endl;
     {
         auto mysp2 = mysp;
         std::cout << mysp.get_uses() << std::endl;

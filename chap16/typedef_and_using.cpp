@@ -1,5 +1,13 @@
-// template_typedef_vs_using.cpp
 // Demonstrates typedef vs using with templates and dependent types
+
+/*
+
+Inside a template, you must write typename only when all three are true:
+
+   1. The name is qualified (uses ::)
+   2. The name is dependent on a template parameter
+   3. The name refers to a type
+*/
 
 #include <vector>
 #include <iostream>

@@ -1,4 +1,5 @@
 #pragma once
+
 #include <cassert>
 
 #ifndef NDEBUG
@@ -159,8 +160,6 @@ public:
         }
     }
 
-    Type* get() const noexcept {TRACE(); return pointee;}
-
     Type* operator->() const noexcept
     {
         assert(pointee);
@@ -172,6 +171,8 @@ public:
         assert(pointee);
         return *pointee;
     }
+
+    Type* get() const noexcept {TRACE(); return pointee;}
 
 private:
 

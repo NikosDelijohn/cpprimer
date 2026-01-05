@@ -1,4 +1,5 @@
 #pragma once
+#include <cassert>
 
 // Thread UNSAFE
 
