@@ -1,39 +1,143 @@
 #include <iostream>
+#include <utility>   // std::move
 
-// decltype, when applied to variable that is const (top-level)
-// it returns the const. It does not ommit it 
+// ============================================================
+// decltype COMPLETE EXAMPLES
+// ============================================================
+//
+// Core rules:
+//
+// 1) decltype(unparenthesized-id-expression)
+//    → declared type (keeps const, keeps reference)
+//
+// 2) decltype(lvalue-expression)   → T&
+// 3) decltype(xvalue-expression)   → T&&
+// 4) decltype(prvalue-expression)  → T
+//
+// auto (contrast):
+// - drops top-level const
+// - drops references unless auto& / auto&& is used
+//
+
+int global = 0;
+
+int func(int x) { return x; }
+
+struct S {
+    int m;
+    int& get_ref() { return m; }
+};
 
 int main()
 {
-    const int ci = 42, &cj = ci;
+    // --------------------------------------------------------
+    // CONST and REFERENCES
+    // --------------------------------------------------------
+    const int ci = 42;
+    const int& cir = ci;
 
-    decltype(ci) x = 0; // x is const int. -but-
-    auto x2 = ci; // x2 is int ! top level const is ignored here
+    decltype(ci) a = 0;        // const int
+    auto b = ci;               // int (top-level const dropped)
 
-    decltype(cj) y = x; // y is const int &. -but-
-    auto y2 = cj; // y2 is int ! top level const is ignored here
-    auto &y3 = cj; // but preserved here. y3 is const int &.
-    //y3 = 5; // wrong! cannot modify a const. 
+    decltype(cir) c = a;       // const int&
+    auto d = cir;              // int
+    auto& e = cir;             // const int&
 
+    // --------------------------------------------------------
+    // ID-EXPRESSION vs PARENTHESIZED EXPRESSION
+    // --------------------------------------------------------
     int value = 1;
-    int &ref_val = value;
+    int& ref = value;
 
-    //decltype (ref_val) a_ref; // wrong, a_ref is int &. -but-
-    auto a_ref = ref_val; // ref_val is int.
+    decltype(value) v1 = 0;    // int
+    decltype((value)) v2 = value; // int&
 
-    // Rules for decltype
-    /*
-    If the expression is an unparenthesized variable name like 'var', decltype (var) returns the declared type, including top-level const
-    If the expression is any other expression that is an lvalue, decltype(expr) it returns a reference to the declared type.
-    */
+    decltype(ref) r1 = value; // int& (declared type)
+    decltype((ref)) r2 = value; // int& (lvalue expression)
 
-    // VS AUTO
+    // --------------------------------------------------------
+    // LVALUE / PRVALUE / XVALUE
+    // --------------------------------------------------------
+    decltype(42) p1 = 42;          // int (prvalue)
+    decltype(value + 1) p2 = 2;   // int (prvalue)
 
-    int arr[] = {1,2,3,4};
+    decltype((value)) l1 = value; // int& (lvalue)
 
-    auto auto_arr(arr); // this is int* ! IT DEDUCES the type
-    decltype(arr) decl_arr; // this is int[4] ! IT returns the EXACTLY DECLARED type
-    decltype((arr)) decl_ref_arr = arr; // this is int &[4] ! A Reference to the declared type and thus it must be initialized
+    decltype(std::move(value)) x1 = 3; // int&& (xvalue)
+
+    // --------------------------------------------------------
+    // ARRAYS
+    // --------------------------------------------------------
+    int arr[4] = {1,2,3,4};
+
+    auto a_arr = arr;              // int* (decays)
+    decltype(arr) d_arr = {1,2,3,4}; // int[4]
+    decltype((arr)) r_arr = arr;   // int (&)[4]
+
+    // --------------------------------------------------------
+    // POINTERS
+    // --------------------------------------------------------
+    int* p = &value;
+
+    decltype(p) p1d = p;           // int*
+    decltype((p)) p2d = p;         // int*&
+
+    // --------------------------------------------------------
+    // FUNCTIONS
+    // --------------------------------------------------------
+    decltype(func) f1 = func;      // int(int)
+    decltype(&func) f2 = func;     // int (*)(int)
+
+    auto f3 = func;                // int (*)(int)
+
+    // --------------------------------------------------------
+    // STRUCT MEMBERS
+    // --------------------------------------------------------
+    S s{10};
+
+    decltype(s.m) m1 = 0;          // int
+    decltype((s.m)) m2 = s.m;      // int&
+
+    decltype(s.get_ref()) m3 = s.m;   // int& (returns ref)
+    decltype((s.get_ref())) m4 = s.m; // int&
+
+    // --------------------------------------------------------
+    // GLOBALS
+    // --------------------------------------------------------
+    decltype(global) g1 = 0;        // int
+    decltype((global)) g2 = global; // int&
+
+    // --------------------------------------------------------
+    // AUTO vs DECLTYPE SUMMARY
+    // --------------------------------------------------------
+    const int cx = 5;
+    const int& crx = cx;
+
+    auto ax1 = cx;         // int
+    auto ax2 = crx;        // int
+    auto& ax3 = crx;       // const int&
+
+    decltype(cx) dx1 = 0;  // const int
+    decltype(crx) dx2 = cx; // const int&
+    decltype((cx)) dx3 = cx; // const int&
+
+    // --------------------------------------------------------
+    // LAMBDAS
+    // --------------------------------------------------------
+    auto lambda = [](int x) { return x + 1; };
+
+    decltype(lambda) lam1 = lambda;   // closure type
+    auto lam2 = lambda;               // same closure type
+
+    // --------------------------------------------------------
+    // AUTO&& vs DECLTYPE
+    // --------------------------------------------------------
+    auto&& u1 = value;            // int&  (universal reference)
+    auto&& u2 = 5;                // int&&
+
+    decltype(auto) da1 = (value); // int&
+    decltype(auto) da2 = value;   // int
+    decltype(auto) da3 = std::move(value); // int&&
 
     return 0;
 }
