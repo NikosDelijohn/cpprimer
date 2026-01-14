@@ -1,10 +1,6 @@
 #include <iostream>
 #include <utility>   // std::move
 
-// ------------------------------------------------------------
-// Three overloads to demonstrate normal function binding rules
-// ------------------------------------------------------------
-
 // (1) Non-const lvalue reference
 // Binds ONLY to non-const lvalues
 void h(int& x)
@@ -57,7 +53,7 @@ int main()
 
     // Deduction:
     //   T = int&
-    //   Parameter type: T&& -> int& && -> int& (reference collapsing)
+    //   Parameter type: T&& -> int& && -> int& 
     //
     // Inside f:
     //   x is an lvalue reference to i
