@@ -1,5 +1,6 @@
 #include <iostream>
 #include <utility>
+#include <type_traits>
 
 template <typename T1, typename T2>
 void incr(T1 arg1, T2& arg2)
@@ -47,7 +48,7 @@ void flip2(Func f, T1&& t1, T2&& t2)
 template <typename T1, typename T2>
 void flip3(T1&& t1, T2&& t2)
 {
-    std::cout << "\tt1=" << t1 << " t2=" << t2 << std::endl;
+    std::cout << "\tt1=" << t1 << " t2=" << t2 << std::endl;    
     incr2(std::forward<T1>(t1), std::forward<T2>(t2));
     std::cout << "\tt1=" << t1 << " t2=" << t2 << std::endl;
 }

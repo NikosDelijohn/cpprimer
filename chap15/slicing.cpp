@@ -89,6 +89,6 @@ Summary:
 
 1. Returning a BASE by VALUE slices off the derived part.
 2. Returning by REFERENCE preserves the dynamic type.
-3. Postfix operators must return by value → dangerous for polymorphic types.
+3. Postfix operators must return by value → this is dangerous for polymorphic types.
 4. Prefix operators can return by reference → no slicing.
 */

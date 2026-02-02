@@ -44,6 +44,8 @@ public:
     }
     
     inline std::string isbn() const { return book_isbn; }
+    double get_total_revenue() const { return total_revenue; }
+    unsigned get_items_sold() const { return items_sold; }
 
 private:
 
