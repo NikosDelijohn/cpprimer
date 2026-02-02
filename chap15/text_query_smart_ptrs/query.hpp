@@ -26,7 +26,7 @@ public:
     Query(const std::string &);
     ~Query() = default;
 
-    // These are NOT virtual classes. This is an interface.
+    // These are NOT virtual classes. This is a proxy to the hierarchy.
     Query_Result eval(const Text_Query &) const;
     std::string rep() const;
 
